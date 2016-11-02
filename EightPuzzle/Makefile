@@ -3,7 +3,7 @@ FLAGS=-g
 
 
 all: 
-	$(COMP) $(FLAGS) main.cpp -o eightpuzzle.out
+	$(COMP) $(FLAGS) -std=c++11 -o eightpuzzle.out main.cpp
 
 clean:
 	rm eightpuzzle.out

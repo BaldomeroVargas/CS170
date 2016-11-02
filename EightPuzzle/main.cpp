@@ -30,7 +30,8 @@ int main(){
 		//welcome message and choice of puzzle
 		cout << puz_out;
 		cin >> choice_puzzle;
-		
+		cout << "\n";
+
 		//switch case to set up use of puzzle
 		switch(choice_puzzle){
 
@@ -40,7 +41,7 @@ int main(){
 
 			case '2':
 				personal_puzzle();
-				//print_custom();
+				print_custom();
 				break;
 
 			default:
@@ -48,6 +49,7 @@ int main(){
 				break;
 
 		}
+
 
 
 		//output algorithm prompts

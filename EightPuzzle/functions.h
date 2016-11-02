@@ -27,12 +27,4 @@ void manhattan_distance(){
 
 
 
-
-
-
-
-
-
-
-
 #endif
