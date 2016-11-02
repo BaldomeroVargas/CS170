@@ -44,4 +44,5 @@ void manhattan_distance(){
 	cout << "ALG3\n";
 }
 
+int manhata
 #endif
