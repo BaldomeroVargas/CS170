@@ -5,35 +5,15 @@
 #include <vector>
 using namespace std;
 
-//node
-
-class node {
-
-	private:
-		int depth = 0;
-		vector <vector <int> > curr_state { {0,0,0}, {0,0,0}, {0,0,0} };
-		node * child1;
-		node * child2;
-		node * child3;
-		node * child4;
-
-	public:
-		void set_depth(){
-			depth++;
-		}
-
-};
-
 //array size, must match
 const int R = 3;
 const int C = 3;
 
 //puzzle types
 vector < vector <int> > def_puzzle { {1,2,3}, {4,8,0}, {7,6,5} };
-
 vector < vector <int> > cust_puzzle { {0,0,0}, {0,0,0}, {0,0,0} };
-
-vector < vector <int> > goal_puzzle; 
+const vector < vector <int> > goal_state { {1,2,3}, {4,5,6}, {7,8,0} };
+vector < vector <int> > init_puzzle; 
 
 //function to set up personal puzzle
 void personal_puzzle(){
@@ -65,7 +45,6 @@ void personal_puzzle(){
 	cust_puzzle.at(2).at(2) = var3;
 
 	cout << "\n";
-
 }
 
 //prints default puzzle
@@ -80,7 +59,7 @@ void print_default(){
 	}
 	cout << "\n";
 	
-	goal_puzzle  = def_puzzle;
+	init_puzzle = def_puzzle;
 }
 
 //prints custom puzzle
@@ -95,7 +74,7 @@ void print_custom(){
 	}
 	cout << "\n";
 	
-	goal_puzzle = cust_puzzle;
+	init_puzzle = cust_puzzle;
 }
 
 //prints out goal puzzle
@@ -105,10 +84,11 @@ void print_goal(){
 	cout << "Here is the goal  puzzle!\n";
 	for(int i = 0; i < R; i++){
 		for(int j = 0; j < C; j++){
-			cout << goal_puzzle.at(i).at(j) << " ";
+			cout << init_puzzle.at(i).at(j) << " ";
 		}
 		cout << "\n";
 	}
 	cout << "\n";
 }
+
 #endif

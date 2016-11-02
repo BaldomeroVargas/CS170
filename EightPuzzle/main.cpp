@@ -1,6 +1,5 @@
 #include <iostream>
 #include "functions.h"
-#include "puzzle.h"
 
 using namespace std;
 
