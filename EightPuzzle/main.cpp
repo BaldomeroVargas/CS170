@@ -11,7 +11,6 @@ const string alg1 = "1. Uniform Cost Search\n";
 const string alg2 = "2. A* with the Misplaced Tile heuristic\n";
 const string alg3 = "3. A* with the Manhattan distance heuristic\n";
 
-
 //main function
 int main(){
 	
@@ -49,9 +48,7 @@ int main(){
 				break;
 
 		}
-
-
-
+		
 		//output algorithm prompts
 		cout << alg_out << alg1 << alg2 << alg3;
 
@@ -84,7 +81,7 @@ int main(){
 		}
 		
 		//to exit program
-		cout << "Would you like to continue? (C/c)\n" << endl;
+		cout << "Would you like to continue? (C/c)\n";
 		cin >> exit_status;
 	}
 

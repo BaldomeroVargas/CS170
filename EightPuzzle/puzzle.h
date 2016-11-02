@@ -14,12 +14,7 @@ vector < vector <int> > def_puzzle { {1,2,3}, {4,8,0}, {7,6,5} };
 
 vector < vector <int> > cust_puzzle { {0,0,0}, {0,0,0}, {0,0,0} };
 
-vector < vector <int> > goal_puzzle { {0,0,0}, {0,0,0}, {0,0,0} };
-
-//status bit for puzzle
-//0 = default
-//1 = costom
-int puzz_choice = 0;
+vector < vector <int> > goal_puzzle; 
 
 //function to set up personal puzzle
 void personal_puzzle(){
@@ -65,6 +60,8 @@ void print_default(){
 		cout << "\n";
 	}
 	cout << "\n";
+	
+	goal_puzzle  = def_puzzle;
 }
 
 //prints custom puzzle
@@ -78,7 +75,21 @@ void print_custom(){
 		cout << "\n";
 	}
 	cout << "\n";
+	
+	goal_puzzle = cust_puzzle;
 }
 
+//prints out goal puzzle
+//mainly for testing
+void print_goal(){
 
+	cout << "Here is the goal  puzzle!\n";
+	for(int i = 0; i < R; i++){
+		for(int j = 0; j < C; j++){
+			cout << goal_puzzle.at(i).at(j) << " ";
+		}
+		cout << "\n";
+	}
+	cout << "\n";
+}
 #endif
