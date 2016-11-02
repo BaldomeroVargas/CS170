@@ -11,6 +11,7 @@ void uniform_cost(){
 	cout << "ALG1\n";
 }
 
+
 //misplaced tile
 void misplaced_tile(){
 
@@ -23,8 +24,6 @@ void manhattan_distance(){
 
 	cout << "ALG3\n";
 }
-
-
 
 
 #endif

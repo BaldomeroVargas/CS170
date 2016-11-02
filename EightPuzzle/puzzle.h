@@ -5,6 +5,25 @@
 #include <vector>
 using namespace std;
 
+//node
+
+class node {
+
+	private:
+		int depth = 0;
+		vector <vector <int> > curr_state { {0,0,0}, {0,0,0}, {0,0,0} };
+		node * child1;
+		node * child2;
+		node * child3;
+		node * child4;
+
+	public:
+		void set_depth(){
+			depth++;
+		}
+
+};
+
 //array size, must match
 const int R = 3;
 const int C = 3;
