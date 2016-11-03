@@ -7,6 +7,5 @@ all:
 clean:
 	rm eightpuzzle.out
 
-
 run:
 	./eightpuzzle.out

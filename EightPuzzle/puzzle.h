@@ -58,7 +58,7 @@ void print_default(){
 		cout << "\n";
 	}
 	cout << "\n";
-	
+	//so we know where to start	
 	init_puzzle = def_puzzle;
 }
 
@@ -73,7 +73,7 @@ void print_custom(){
 		cout << "\n";
 	}
 	cout << "\n";
-	
+	//so we know where we start
 	init_puzzle = cust_puzzle;
 }
 
