@@ -4,13 +4,60 @@
 #include "puzzle.h"
 #include "node.h"
 #include <math.h>
+#include <queue>
+
+int expanded = 0;
+int max_qeueue = 0;
 
 //Uniform Cost 
 //h(n) = 0; g(n) = 1, or current depth;
 void uniform_cost(){
 	
-	cout << "ALG1\n";
+	//just in case there is no need to solve
+	if(init_puzzle == goal_state){
+		cout << "The puzzle is already in a Solved state\n";
+		exit(0);
+	}
+	//create initial node
+	node top;
+	top.curr_state = init_puzzle;
+	//queue init, already traversed
+	vector < node > seen;
+	vector < node > prio_q;
+	
+	//initializing our prio q
+	prio_q.push_back(top);
+	
+	while(1){
+		
+		//if we are ever deaper than the known diameter we can solve
+		//but shouldnt so we will return an error since we are trying to optimize 
+		//this
+		if(top.depth > diameter){
+			cout << "Puzzle should not be solved beyond this point\n";
+			exit(0);
+		}
+		//checking all the children before pushing to the heap
+		// for(int i = 0; i < 4; ++i){
+		// 	if(i == 0){
+				
+		// 	}
+		// 	else if(i == 1){
+				
+		// 	}
+		// 	else if(i == 2){
+				
+		// 	}
+		// 	else{
+				
+		// 	}
+		// }
+	}
+	
 }
+
+/*cout << "Puzzle solved!\nExpanded nodes: << expanded 
+		<< "\nMax Nodes in queue: << "\nDepth of goal node: << depth <<< "\n";*/
 
 //misplaced tile
 //h(n) = hn_misplaced; g(n) = 1, or current depth;

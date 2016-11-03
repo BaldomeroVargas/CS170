@@ -7,15 +7,25 @@
 class node {
 
 	public:
-		int depth = 0;
-		vector <vector <int> > curr_state { {0,0,0}, {0,0,0}, {0,0,0} };
+		int depth;
+		vector <vector <int> > curr_state;
 		//for possible branches
 		node * child1;
 		node * child2;
 		node * child3;
 		node * child4;
 		//use primarily for Traceback from goal state
-		node * parent = 0;
+		node * parent;
+		
+		node(){
+			depth = 0;
+			child1 = 0;
+			child2 = 0;
+			child3 = 0;
+			child4 = 0;
+			parent = 0;
+			curr_state = { {0,0,0}, {0,0,0}, {0,0,0} };
+		}
 
 };
 
