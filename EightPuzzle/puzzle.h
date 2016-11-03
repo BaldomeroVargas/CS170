@@ -15,6 +15,9 @@ vector < vector <int> > cust_puzzle { {0,0,0}, {0,0,0}, {0,0,0} };
 const vector < vector <int> > goal_state { {1,2,3}, {4,5,6}, {7,8,0} };
 vector < vector <int> > init_puzzle; 
 
+//diameter for known 3x3, change for different size
+int diameter = 31;
+
 //function to set up personal puzzle
 void personal_puzzle(){
 

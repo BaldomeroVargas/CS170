@@ -41,7 +41,8 @@ int main(){
 				break;
 
 			default:
-				cout << "Please enter valid choice (1 or 2)\n";
+				cout << "Please enter valid choice (1 or 2) and try again.\n";
+				return 0;
 				break;
 
 		}
@@ -72,7 +73,8 @@ int main(){
 			
 			//well lets try again
 			default:
-				cout << "Please slect a valid choice (1 or 2 or 3)\n";
+				cout << "Please slect a valid choice (1 or 2 or 3) and try again.\n";
+				return 0;
 				break;
 
 		}

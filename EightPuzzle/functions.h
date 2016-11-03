@@ -2,52 +2,31 @@
 #define FUNCTIONS_H
 
 #include "puzzle.h"
+#include "node.h"
 #include <math.h>
 
-//node class declaration
-class node {
-
-	private:
-		int depth = 0;
-		vector <vector <int> > curr_state { {0,0,0}, {0,0,0}, {0,0,0} };
-		//for possible branches
-		node * child1;
-		node * child2;
-		node * child3;
-		node * child4;
-		//use primarily for Traceback from goal state
-		node * parent = 0;
-
-	public:
-		void set_depth(){
-			depth++;
-		}
-
-};
-
 //Uniform Cost 
-//h(n) = 0; g(n) = 1;
+//h(n) = 0; g(n) = 1, or current depth;
 void uniform_cost(){
 	
 	cout << "ALG1\n";
 }
 
-
 //misplaced tile
-//h(n) = hn_misplaced; g(n) = 1;
+//h(n) = hn_misplaced; g(n) = 1, or current depth;
 void misplaced_tile(){
 
 	cout << "ALG2\n";
 }
 
-
 //manhattan distance 
-//h(n) = hn_manhattan; g(n) = 1;
+//h(n) = hn_manhattan; g(n) = 1, or current depth;
 void manhattan_distance(){
 
 	cout << "ALG3\n";
 }
 
+//manhattan distance h(n)
 int hn_manhattan(vector <vector <int> > current){
 	int man_dist = 0;
 	int temp, xdistance, ydistance;
@@ -69,6 +48,7 @@ int hn_manhattan(vector <vector <int> > current){
 	return man_dist;
 }
 
+//mispaced tile h(n)
 int hn_misplaced(vector <vector <int> > current){
 
 	int count = 0;
@@ -86,7 +66,6 @@ int hn_misplaced(vector <vector <int> > current){
 	}
 	return count;
 }
-
 
 
 #endif
