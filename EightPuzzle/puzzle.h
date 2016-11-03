@@ -30,14 +30,14 @@ void personal_puzzle(){
 	cust_puzzle.at(0).at(1) = var2;
 	cust_puzzle.at(0).at(2) = var3;
 
-	cout << "\nEnter the second row, use space or tabs between numbers: ";
+	cout << "Enter the second row, use space or tabs between numbers: ";
 	cin >> var1 >> var2 >> var3;
 
 	cust_puzzle.at(1).at(0) = var1;
 	cust_puzzle.at(1).at(1) = var2;
 	cust_puzzle.at(1).at(2) = var3;
 
-	cout << "\nEnter the third row, use space or tabs between numbers: ";
+	cout << "Enter the third row, use space or tabs between numbers: ";
 	cin >> var1 >> var2 >> var3;
 
 	cust_puzzle.at(2).at(0) = var1;
@@ -81,10 +81,10 @@ void print_custom(){
 //mainly for testing
 void print_goal(){
 
-	cout << "Here is the goal  puzzle!\n";
+	cout << "Here is the goal puzzle!\n";
 	for(int i = 0; i < R; i++){
 		for(int j = 0; j < C; j++){
-			cout << init_puzzle.at(i).at(j) << " ";
+			cout << goal_state.at(i).at(j) << " ";
 		}
 		cout << "\n";
 	}

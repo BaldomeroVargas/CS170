@@ -1,10 +1,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include <iostream>
 #include "puzzle.h"
-
-using namespace std;
 
 //node class declaration
 class node {
@@ -44,5 +41,4 @@ void manhattan_distance(){
 	cout << "ALG3\n";
 }
 
-int manhata
 #endif

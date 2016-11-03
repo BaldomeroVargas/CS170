@@ -1,8 +1,6 @@
 #include <iostream>
 #include "functions.h"
 
-using namespace std;
-
 //menu outputs
 const string puz_out = "Welcome! Please enter 1 if you would like to use the default puzzle or 2 if you want to input your own\n";
 const string alg_out = "Please enter choice or algorithm\n";
