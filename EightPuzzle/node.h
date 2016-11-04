@@ -8,25 +8,25 @@ class node {
 
 	public:
 		int depth;
+		//cost f(n)
+		int fn;
 		vector <vector <int> > curr_state;
-		//for possible branches
-		node * child1;
-		node * child2;
-		node * child3;
-		node * child4;
 		//use primarily for Traceback from goal state
 		node * parent;
 		
 		node(){
 			depth = 0;
-			child1 = 0;
-			child2 = 0;
-			child3 = 0;
-			child4 = 0;
+			fn = 0;
 			parent = 0;
 			curr_state = { {0,0,0}, {0,0,0}, {0,0,0} };
 		}
 
+};
+
+struct cost{
+		bool operator()(const node& lhs, const node& rhs) const{
+			return lhs.fn < rhs.fn;
+		}	
 };
 
 void z_index(int & zR, int & zC, vector <vector <int> > current){
