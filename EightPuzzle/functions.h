@@ -5,6 +5,7 @@
 #include "node.h"
 #include <math.h>
 #include <queue>
+#include <map>
 
 using namespace std;
 
@@ -58,12 +59,11 @@ void trace_back(node last){
 	
 	//push path to vector
 	node * temp = last.parent;
-	node * move_temp = last.parent;
 	
 	output_trace.push_back(last.curr_state);
 	while(temp != 0){
 		output_trace.push_back(temp->curr_state);
-		temp = move_temp->parent;
+		temp = temp->parent;
 	}
 	
 	//output path
@@ -88,7 +88,9 @@ int end_program_check(vector <vector <int> > current, int depth){
 }
 
 //updating queue function
-void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int movement, int alg){
+//sets fn
+void update_q(node cur, priority_queue<node, vector<node>, cost> & q, 
+map < vector <vector <int> >, bool> & trav, int movement, int alg){
 	
 	//for hn
 	int hn = 0;
@@ -106,20 +108,24 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 		//left
 		case 0:
 			if(m_left(temp.curr_state) == 1){
-				q.push(temp);
-				expanded++;
-				if(end_program_check(temp.curr_state, temp.depth)){
-					trace_back(temp);
+				if(trav.find(temp.curr_state) == trav.end()){
+					q.push(temp);
+					expanded++;
+					if(end_program_check(temp.curr_state, temp.depth)){
+						trace_back(temp);
+					}					
 				}
 			}
 			break;
 		//right
 		case 1:
 			if(m_right(temp.curr_state) == 1){
-				q.push(temp);
-				expanded++;
-				if(end_program_check(temp.curr_state, temp.depth)){
-					trace_back(temp);
+				if(trav.find(temp.curr_state) == trav.end()){
+					q.push(temp);
+					expanded++;
+					if(end_program_check(temp.curr_state, temp.depth)){
+						trace_back(temp);
+					}					
 				}
 			}
 			break;
@@ -127,10 +133,12 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 		//up
 		case 2:
 			if(m_up(temp.curr_state) == 1){
-				q.push(temp);
-				expanded++;
-				if(end_program_check(temp.curr_state, temp.depth)){
-					trace_back(temp);
+				if(trav.find(temp.curr_state) == trav.end()){
+					q.push(temp);
+					expanded++;
+					if(end_program_check(temp.curr_state, temp.depth)){
+						trace_back(temp);
+					}					
 				}
 			}
 			break;
@@ -138,10 +146,12 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 		//down
 		case 3:
 			if(m_down(temp.curr_state) == 1){
-				q.push(temp);
-				expanded++;
-				if(end_program_check(temp.curr_state, temp.depth)){
-					trace_back(temp);
+				if(trav.find(temp.curr_state) == trav.end()){
+					q.push(temp);
+					expanded++;
+					if(end_program_check(temp.curr_state, temp.depth)){
+						trace_back(temp);
+					}					
 				}
 			}
 			break;
@@ -169,7 +179,7 @@ void general_alg(int choice){
 	top.curr_state = init_puzzle;
 	
 	//already traversed container
-	vector < node > seen;
+	map <vector <vector <int> >, bool> trav;
 	
 	//actually using prio_q now and setting it up
 	priority_queue<node, vector<node>, cost> q;
@@ -199,12 +209,15 @@ void general_alg(int choice){
 		current_node.depth = q.top().depth;
 		current_node.parent = q.top().parent;
 		
+		print_trace(current_node.curr_state); 
+		cout << " " << current_node.depth << "\n";
+		
 		q.pop();
 		
 		//checking all the children before pushing to the heap
 		for(int i = 0; i < 4; ++i){
-			//1 = left, 2 = right, 3 = up, 4 = down
-			update_q(current_node,q,i, choice);	
+			//0 = left, 1 = right, 2 = up, 3 = down
+			update_q(current_node,q,trav, i, choice);	
 		}
 	}
 	

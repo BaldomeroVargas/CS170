@@ -25,7 +25,7 @@ class node {
 
 struct cost{
 		bool operator()(const node& lhs, const node& rhs) const{
-			return lhs.fn < rhs.fn;
+			return lhs.fn > rhs.fn;
 		}	
 };
 

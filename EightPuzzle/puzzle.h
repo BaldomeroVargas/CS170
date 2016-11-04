@@ -10,6 +10,7 @@ const int R = 3;
 const int C = 3;
 
 //puzzle types
+//change size with type of puzzle
 vector < vector <int> > def_puzzle { {1,2,3}, {4,8,0}, {7,6,5} };
 vector < vector <int> > cust_puzzle { {0,0,0}, {0,0,0}, {0,0,0} };
 const vector < vector <int> > goal_state { {1,2,3}, {4,5,6}, {7,8,0} };
