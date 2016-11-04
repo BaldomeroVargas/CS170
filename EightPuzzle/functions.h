@@ -76,79 +76,73 @@ void trace_back(node last){
 
 //updating queue function
 void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int movement, int alg){
-				//for hn
-				int hn = 0;
-				if(alg == 1){
-					hn = 0;
-				}
-				else if(alg == 2){
-					hn = hn_misplaced(cur.curr_state);
-				}
-				else{
-					hn = hn_manhattan(cur.curr_state);
-				}
-				node temp;
-				temp.depth = cur.depth + 1;
-				temp.fn = temp.depth + hn;
-				temp.parent = &cur;
-				temp.curr_state = cur.curr_state;
-				
-				//for movement type
-				if(movement == 0){
-					if(m_left(temp.curr_state) == 1){
-						q.push(temp);
-						expanded++;
-						if(temp.curr_state == goal_state){
-							cout << "Expanded nodes: " << expanded << endl;
-							cout << "Max queue size: " << max_qeueue << endl;
-							cout << "Depth of goal node: " << temp.depth << endl << endl;
-							trace_back(temp);
-							exit(0);
-						}
-					}					
-				}
-				else if(movement == 1){
-					if(m_right(temp.curr_state) == 1){
-						q.push(temp);
-						expanded++;
-						if(temp.curr_state == goal_state){
-							cout << "Expanded nodes: " << expanded << endl;
-							cout << "Max queue size: " << max_qeueue << endl;
-							cout << "Depth of goal node: " << temp.depth << endl << endl;
-							trace_back(temp);
-							exit(0);
-						}
-					}					
-				}
-				else if(movement == 2){
-					if(m_up(temp.curr_state) == 1){
-						q.push(temp);
-						expanded++;
-						if(temp.curr_state == goal_state){
-							cout << "Expanded nodes: " << expanded << endl;
-							cout << "Max queue size: " << max_qeueue << endl;
-							cout << "Depth of goal node: " << temp.depth << endl << endl;
-							trace_back(temp);
-							exit(0);
-						}
-					}					
-				}
-				else{
-					if(m_down(temp.curr_state) == 1){
-						q.push(temp);
-						expanded++;
-						if(temp.curr_state == goal_state){
-							cout << "Expanded nodes: " << expanded << endl;
-							cout << "Max queue size: " << max_qeueue << endl;
-							cout << "Depth of goal node: " << temp.depth << endl << endl;
-							trace_back(temp);
-							exit(0);
-						}
-					}					
-				}
+	
+	//for hn
+	int hn = 0;
+	if(alg == 1){ hn = 0; }
+	else if(alg == 2){ hn = hn_misplaced(cur.curr_state); }
+	else{ hn = hn_manhattan(cur.curr_state); }
+	node temp;
+	temp.depth = cur.depth + 1;
+	temp.fn = temp.depth + hn;
+	temp.parent = &cur;
+	temp.curr_state = cur.curr_state;
+	
+	//for movement type
+	if(movement == 0){
+		if(m_left(temp.curr_state) == 1){
+			q.push(temp);
+			expanded++;
+			if(temp.curr_state == goal_state){
+				cout << "Expanded nodes: " << expanded << endl;
+				cout << "Max queue size: " << max_qeueue << endl;
+				cout << "Depth of goal node: " << temp.depth << endl << endl;
+				trace_back(temp);
+				exit(0);
+			}
+		}					
+	}
+	else if(movement == 1){
+		if(m_right(temp.curr_state) == 1){
+			q.push(temp);
+			expanded++;
+			if(temp.curr_state == goal_state){
+				cout << "Expanded nodes: " << expanded << endl;
+				cout << "Max queue size: " << max_qeueue << endl;
+				cout << "Depth of goal node: " << temp.depth << endl << endl;
+				trace_back(temp);
+				exit(0);
+			}
+		}					
+	}
+	else if(movement == 2){
+		if(m_up(temp.curr_state) == 1){
+			q.push(temp);
+			expanded++;
+			if(temp.curr_state == goal_state){
+				cout << "Expanded nodes: " << expanded << endl;
+				cout << "Max queue size: " << max_qeueue << endl;
+				cout << "Depth of goal node: " << temp.depth << endl << endl;
+				trace_back(temp);
+				exit(0);
+			}
+		}					
+	}
+	else{
+		if(m_down(temp.curr_state) == 1){
+			q.push(temp);
+			expanded++;
+			if(temp.curr_state == goal_state){
+				cout << "Expanded nodes: " << expanded << endl;
+				cout << "Max queue size: " << max_qeueue << endl;
+				cout << "Depth of goal node: " << temp.depth << endl << endl;
+				trace_back(temp);
+				exit(0);
+			}
+		}					
+	}
 				
 }
-
 
 //Uniform Cost 
 //h(n) = 0; g(n) = 1, or current depth;
@@ -169,7 +163,7 @@ void general_alg(int choice){
 	//already traversed container
 	vector < node > seen;
 	
-	//actually using prio_q no
+	//actually using prio_q now and setting it up
 	priority_queue<node, vector<node>, cost> q;
 	q.push(top);
 	
@@ -201,21 +195,8 @@ void general_alg(int choice){
 		
 		//checking all the children before pushing to the heap
 		for(int i = 0; i < 4; ++i){
-			if(i == 0){
-				//move left
-				update_q(current_node,q,i, choice);
-			}
-			else if(i == 1){
-				update_q(current_node,q,i, choice);			
-			}
-			else if(i == 2){
-				//move up
-				update_q(current_node,q,i, choice);			
-			}
-			else{
-				//move down
-				update_q(current_node,q,i, choice);			
-			}
+			//1 = left, 2 = right, 3 = up, 4 = down
+			update_q(current_node,q,i, choice);	
 		}
 	}
 	

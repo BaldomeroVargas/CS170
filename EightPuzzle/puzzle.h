@@ -50,7 +50,7 @@ void personal_puzzle(){
 	cout << "\n";
 }
 
-//prints custom puzzle
+//prints starting puzzle
 void print_start(int puzzle_choice){
 
 	if(puzzle_choice == 1){
