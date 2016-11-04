@@ -52,6 +52,28 @@ int hn_misplaced(vector <vector <int> > current){
 	return count;
 }
 
+//for traceback
+void trace_back(node last){
+	vector <vector <vector <int> > > output_trace;
+	
+	//push path to vector
+	node * temp = last.parent;
+	node * move_temp = last.parent;
+	
+	output_trace.push_back(last.curr_state);
+	while(temp != 0){
+		output_trace.push_back(temp->curr_state);
+		temp = move_temp->parent;
+	}
+	
+	//output path
+	for(int i = output_trace.size() - 1; i > -1; --i){
+		print_trace(output_trace.at(i));
+	}
+	
+	
+}
+
 //updating queue function
 void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int movement, int alg){
 				//for hn
@@ -77,8 +99,10 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 						q.push(temp);
 						expanded++;
 						if(temp.curr_state == goal_state){
-							cout << expanded << endl;
-							cout << temp.depth << endl;
+							cout << "Expanded nodes: " << expanded << endl;
+							cout << "Max queue size: " << max_qeueue << endl;
+							cout << "Depth of goal node: " << temp.depth << endl << endl;
+							trace_back(temp);
 							exit(0);
 						}
 					}					
@@ -88,8 +112,10 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 						q.push(temp);
 						expanded++;
 						if(temp.curr_state == goal_state){
-							cout << expanded << endl;
-							cout << temp.depth << endl;
+							cout << "Expanded nodes: " << expanded << endl;
+							cout << "Max queue size: " << max_qeueue << endl;
+							cout << "Depth of goal node: " << temp.depth << endl << endl;
+							trace_back(temp);
 							exit(0);
 						}
 					}					
@@ -99,8 +125,10 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 						q.push(temp);
 						expanded++;
 						if(temp.curr_state == goal_state){
-							cout << expanded << endl;
-							cout << temp.depth << endl;
+							cout << "Expanded nodes: " << expanded << endl;
+							cout << "Max queue size: " << max_qeueue << endl;
+							cout << "Depth of goal node: " << temp.depth << endl << endl;
+							trace_back(temp);
 							exit(0);
 						}
 					}					
@@ -110,8 +138,10 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 						q.push(temp);
 						expanded++;
 						if(temp.curr_state == goal_state){
-							cout << expanded << endl;
-							cout << temp.depth << endl;
+							cout << "Expanded nodes: " << expanded << endl;
+							cout << "Max queue size: " << max_qeueue << endl;
+							cout << "Depth of goal node: " << temp.depth << endl << endl;
+							trace_back(temp);
 							exit(0);
 						}
 					}					
@@ -192,15 +222,134 @@ void uniform_cost(){
 //misplaced tile
 //h(n) = hn_misplaced; g(n) = 1, or current depth;
 void misplaced_tile(){
-
-	cout << "ALG2\n";
+	//just in case there is no need to solve
+	if(init_puzzle == goal_state){
+		cout << "The puzzle is already in a Solved state\n";
+		exit(0);
+	}
+	//create initial node
+	node top;
+	top.curr_state = init_puzzle;
+	
+	//already traversed container
+	vector < node > seen;
+	
+	//actually using prio_q no
+	priority_queue<node, vector<node>, cost> q;
+	q.push(top);
+	
+	while(1){
+		
+		//cehck if queue is empty which it shouldnt
+		if(q.empty()){
+			cout << "Puzzle cannot be solved\n";
+			exit(0);
+		}
+		//we need to update the max size of the queue
+		if(max_qeueue < q.size()){
+			max_qeueue = q.size();
+		}
+		//if we are ever deaper than the known diameter we can solve
+		//but shouldnt so we will return an error since we are trying to optimize 
+		//this
+		if(top.depth > diameter){
+			cout << "Puzzle should not be solved beyond this point\n";
+			exit(0);
+		}
+		//pop off top of queue
+		node current_node;
+		current_node.curr_state = q.top().curr_state;
+		current_node.depth = q.top().depth;
+		current_node.parent = q.top().parent;
+		
+		q.pop();
+		
+		//checking all the children before pushing to the heap
+		for(int i = 0; i < 4; ++i){
+			if(i == 0){
+				//move left
+				update_q(current_node,q,i, 1);
+			}
+			else if(i == 1){
+				update_q(current_node,q,i, 1);			
+			}
+			else if(i == 2){
+				//move up
+				update_q(current_node,q,i, 1);			
+			}
+			else{
+				//move down
+				update_q(current_node,q,i, 1);			
+			}
+		}
+	}
 }
 
 //manhattan distance 
 //h(n) = hn_manhattan; g(n) = 1, or current depth;
 void manhattan_distance(){
 
-	cout << "ALG3\n";
+	//just in case there is no need to solve
+	if(init_puzzle == goal_state){
+		cout << "The puzzle is already in a Solved state\n";
+		exit(0);
+	}
+	//create initial node
+	node top;
+	top.curr_state = init_puzzle;
+	
+	//already traversed container
+	vector < node > seen;
+	
+	//actually using prio_q no
+	priority_queue<node, vector<node>, cost> q;
+	q.push(top);
+	
+	while(1){
+		
+		//cehck if queue is empty which it shouldnt
+		if(q.empty()){
+			cout << "Puzzle cannot be solved\n";
+			exit(0);
+		}
+		//we need to update the max size of the queue
+		if(max_qeueue < q.size()){
+			max_qeueue = q.size();
+		}
+		//if we are ever deaper than the known diameter we can solve
+		//but shouldnt so we will return an error since we are trying to optimize 
+		//this
+		if(top.depth > diameter){
+			cout << "Puzzle should not be solved beyond this point\n";
+			exit(0);
+		}
+		//pop off top of queue
+		node current_node;
+		current_node.curr_state = q.top().curr_state;
+		current_node.depth = q.top().depth;
+		current_node.parent = q.top().parent;
+		
+		q.pop();
+		
+		//checking all the children before pushing to the heap
+		for(int i = 0; i < 4; ++i){
+			if(i == 0){
+				//move left
+				update_q(current_node,q,i, 2);
+			}
+			else if(i == 1){
+				update_q(current_node,q,i, 2);			
+			}
+			else if(i == 2){
+				//move up
+				update_q(current_node,q,i, 2);			
+			}
+			else{
+				//move down
+				update_q(current_node,q,i, 2);			
+			}
+		}
+	}
 }
 
 #endif

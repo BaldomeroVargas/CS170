@@ -82,12 +82,11 @@ void print_custom(){
 
 //prints out goal puzzle
 //mainly for testing
-void print_goal(){
+void print_trace(vector<vector <int> > trace){
 
-	cout << "Here is the goal puzzle!\n";
 	for(int i = 0; i < R; i++){
 		for(int j = 0; j < C; j++){
-			cout << goal_state.at(i).at(j) << " ";
+			cout << trace.at(i).at(j) << " ";
 		}
 		cout << "\n";
 	}
