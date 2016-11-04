@@ -71,7 +71,20 @@ void trace_back(node last){
 		print_trace(output_trace.at(i));
 	}
 	
+	//program should end here
+	exit(0);
+}
+
+//checking if we are done
+int end_program_check(vector <vector <int> > current, int depth){
 	
+	if(current == goal_state){
+		cout << "Expanded nodes: " << expanded << endl;
+		cout << "Max queue size: " << max_qeueue << endl;
+		cout << "Depth of goal node: " << depth << endl << endl;
+		return 1;
+	}
+	return 0;
 }
 
 //updating queue function
@@ -89,59 +102,54 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 	temp.curr_state = cur.curr_state;
 	
 	//for movement type
-	if(movement == 0){
-		if(m_left(temp.curr_state) == 1){
-			q.push(temp);
-			expanded++;
-			if(temp.curr_state == goal_state){
-				cout << "Expanded nodes: " << expanded << endl;
-				cout << "Max queue size: " << max_qeueue << endl;
-				cout << "Depth of goal node: " << temp.depth << endl << endl;
-				trace_back(temp);
-				exit(0);
+	switch(movement){
+		//left
+		case 0:
+			if(m_left(temp.curr_state) == 1){
+				q.push(temp);
+				expanded++;
+				if(end_program_check(temp.curr_state, temp.depth)){
+					trace_back(temp);
+				}
 			}
-		}					
-	}
-	else if(movement == 1){
-		if(m_right(temp.curr_state) == 1){
-			q.push(temp);
-			expanded++;
-			if(temp.curr_state == goal_state){
-				cout << "Expanded nodes: " << expanded << endl;
-				cout << "Max queue size: " << max_qeueue << endl;
-				cout << "Depth of goal node: " << temp.depth << endl << endl;
-				trace_back(temp);
-				exit(0);
+			break;
+		//right
+		case 1:
+			if(m_right(temp.curr_state) == 1){
+				q.push(temp);
+				expanded++;
+				if(end_program_check(temp.curr_state, temp.depth)){
+					trace_back(temp);
+				}
 			}
-		}					
-	}
-	else if(movement == 2){
-		if(m_up(temp.curr_state) == 1){
-			q.push(temp);
-			expanded++;
-			if(temp.curr_state == goal_state){
-				cout << "Expanded nodes: " << expanded << endl;
-				cout << "Max queue size: " << max_qeueue << endl;
-				cout << "Depth of goal node: " << temp.depth << endl << endl;
-				trace_back(temp);
-				exit(0);
+			break;
+		
+		//up
+		case 2:
+			if(m_up(temp.curr_state) == 1){
+				q.push(temp);
+				expanded++;
+				if(end_program_check(temp.curr_state, temp.depth)){
+					trace_back(temp);
+				}
 			}
-		}					
-	}
-	else{
-		if(m_down(temp.curr_state) == 1){
-			q.push(temp);
-			expanded++;
-			if(temp.curr_state == goal_state){
-				cout << "Expanded nodes: " << expanded << endl;
-				cout << "Max queue size: " << max_qeueue << endl;
-				cout << "Depth of goal node: " << temp.depth << endl << endl;
-				trace_back(temp);
-				exit(0);
+			break;
+		
+		//down
+		case 3:
+			if(m_down(temp.curr_state) == 1){
+				q.push(temp);
+				expanded++;
+				if(end_program_check(temp.curr_state, temp.depth)){
+					trace_back(temp);
+				}
 			}
-		}					
+			break;
+		//error
+		default:
+			cout <<"ERROR: You should not be here\n";
+			exit(1);
 	}
-				
 }
 
 //Uniform Cost 
