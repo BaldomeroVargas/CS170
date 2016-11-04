@@ -65,7 +65,7 @@ int main(){
 
 		//Uniform A* with the Manhattan distance heusistic
 		case '3':
-			general_alg(2);
+			general_alg(3);
 			break;
 		
 		//well lets try again

@@ -14,10 +14,19 @@ class node {
 		//use primarily for Traceback from goal state
 		node * parent;
 		
+		node& operator=( const node& rhs ){
+			this->depth = rhs.depth;
+			this->fn = rhs.fn;
+			this->curr_state = rhs.curr_state;
+			this->parent = rhs.parent;
+			
+			return *this;
+		}
+		
 		node(){
 			depth = 0;
 			fn = 0;
-			parent = 0;
+			parent = NULL;
 			curr_state = { {0,0,0}, {0,0,0}, {0,0,0} };
 		}
 

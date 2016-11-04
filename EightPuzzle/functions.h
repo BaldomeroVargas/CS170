@@ -23,9 +23,9 @@ int hn_manhattan(vector <vector <int> > current){
 			}
 			temp = current.at(i).at(j);
 			//this will give us the corresponding row
-			xdistance = abs(i - (temp / 3));
+			xdistance = abs(i - ((temp - 1) / 3));
 			//this helps with the corresponding column
-			ydistance = abs(j - (temp % 3));
+			ydistance = abs(j - ((temp - 1) % 3));
 			//now lets add to our overall count
 			man_dist += (xdistance + ydistance);
 		}
@@ -58,10 +58,9 @@ void trace_back(node last){
 	vector <vector <vector <int> > > output_trace;
 	
 	//push path to vector
-	node * temp = last.parent;
+	node * temp = &last;
 	
-	output_trace.push_back(last.curr_state);
-	while(temp != 0){
+	while(temp != NULL){
 		output_trace.push_back(temp->curr_state);
 		temp = temp->parent;
 	}
@@ -96,7 +95,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 	int hn = 0;
 	if(alg == 1){ hn = 0; }
 	else if(alg == 2){ hn = hn_misplaced(cur.curr_state); }
-	else{ hn = hn_manhattan(cur.curr_state); }
+	else if(alg == 3){ hn = hn_manhattan(cur.curr_state); }
 	node temp;
 	temp.depth = cur.depth + 1;
 	temp.fn = temp.depth + hn;
@@ -113,6 +112,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
 						trace_back(temp);
+						exit(0);
 					}					
 				}
 			}
@@ -125,6 +125,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
 						trace_back(temp);
+						exit(0);
 					}					
 				}
 			}
@@ -138,6 +139,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
 						trace_back(temp);
+						exit(0);
 					}					
 				}
 			}
@@ -151,6 +153,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
 						trace_back(temp);
+						exit(0);
 					}					
 				}
 			}
@@ -205,14 +208,12 @@ void general_alg(int choice){
 		}
 		//pop off top of queue
 		node current_node;
-		current_node.curr_state = q.top().curr_state;
-		current_node.depth = q.top().depth;
-		current_node.parent = q.top().parent;
+		current_node = q.top();
 		
-		print_trace(current_node.curr_state); 
-		cout << " " << current_node.depth << "\n";
+		q.pop();		
 		
-		q.pop();
+		// print_trace(current_node.curr_state); 
+		// cout << " " << current_node.depth << "\n";
 		
 		//checking all the children before pushing to the heap
 		for(int i = 0; i < 4; ++i){
