@@ -50,34 +50,23 @@ void personal_puzzle(){
 	cout << "\n";
 }
 
-//prints default puzzle
-void print_default(){
-
-	cout << "Here is the default puzzle!\n";
-	for(int i = 0; i < R; i++){
-		for(int j = 0;j < C; j++){
-			cout << def_puzzle.at(i).at(j) << " ";
-		}
-		cout << "\n";
-	}
-	cout << "\n";
-	//so we know where to start	
-	init_puzzle = def_puzzle;
-}
-
 //prints custom puzzle
-void print_custom(){
+void print_start(int puzzle_choice){
 
-	cout << "Here is your custom puzzle!\n";
+	if(puzzle_choice == 1){
+		init_puzzle = def_puzzle;
+	}
+	else{
+		init_puzzle = cust_puzzle;		
+	}
+	cout << "Here is your puzzle!\n";
 	for(int i = 0; i < R; i++){
 		for(int j = 0; j < C; j++){
-			cout << cust_puzzle.at(i).at(j) << " ";
+			cout << init_puzzle.at(i).at(j) << " ";
 		}
 		cout << "\n";
 	}
 	cout << "\n";
-	//so we know where we start
-	init_puzzle = cust_puzzle;
 }
 
 //prints out goal puzzle

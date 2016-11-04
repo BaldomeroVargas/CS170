@@ -78,10 +78,10 @@ void trace_back(node last){
 void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int movement, int alg){
 				//for hn
 				int hn = 0;
-				if(alg == 0){
+				if(alg == 1){
 					hn = 0;
 				}
-				else if(alg == 1){
+				else if(alg == 2){
 					hn = hn_misplaced(cur.curr_state);
 				}
 				else{
@@ -149,146 +149,14 @@ void update_q(node cur, priority_queue<node, vector<node>, cost> & q, int moveme
 				
 }
 
+
 //Uniform Cost 
 //h(n) = 0; g(n) = 1, or current depth;
-void uniform_cost(){
-	//just in case there is no need to solve
-	if(init_puzzle == goal_state){
-		cout << "The puzzle is already in a Solved state\n";
-		exit(0);
-	}
-	//create initial node
-	node top;
-	top.curr_state = init_puzzle;
-	
-	//already traversed container
-	vector < node > seen;
-	
-	//actually using prio_q no
-	priority_queue<node, vector<node>, cost> q;
-	q.push(top);
-	
-	while(1){
-		
-		//cehck if queue is empty which it shouldnt
-		if(q.empty()){
-			cout << "Puzzle cannot be solved\n";
-			exit(0);
-		}
-		//we need to update the max size of the queue
-		if(max_qeueue < q.size()){
-			max_qeueue = q.size();
-		}
-		//if we are ever deaper than the known diameter we can solve
-		//but shouldnt so we will return an error since we are trying to optimize 
-		//this
-		if(top.depth > diameter){
-			cout << "Puzzle should not be solved beyond this point\n";
-			exit(0);
-		}
-		//pop off top of queue
-		node current_node;
-		current_node.curr_state = q.top().curr_state;
-		current_node.depth = q.top().depth;
-		current_node.parent = q.top().parent;
-		
-		q.pop();
-		
-		//checking all the children before pushing to the heap
-		for(int i = 0; i < 4; ++i){
-			if(i == 0){
-				//move left
-				update_q(current_node,q,i, 0);
-			}
-			else if(i == 1){
-				update_q(current_node,q,i, 0);			
-			}
-			else if(i == 2){
-				//move up
-				update_q(current_node,q,i, 0);			
-			}
-			else{
-				//move down
-				update_q(current_node,q,i, 0);			
-			}
-		}
-	}
-	
-}
-
-/*cout << "Puzzle solved!\nExpanded nodes: << expanded 
-		<< "\nMax Nodes in queue: << "\nDepth of goal node: << depth <<< "\n";*/
-
 //misplaced tile
 //h(n) = hn_misplaced; g(n) = 1, or current depth;
-void misplaced_tile(){
-	//just in case there is no need to solve
-	if(init_puzzle == goal_state){
-		cout << "The puzzle is already in a Solved state\n";
-		exit(0);
-	}
-	//create initial node
-	node top;
-	top.curr_state = init_puzzle;
-	
-	//already traversed container
-	vector < node > seen;
-	
-	//actually using prio_q no
-	priority_queue<node, vector<node>, cost> q;
-	q.push(top);
-	
-	while(1){
-		
-		//cehck if queue is empty which it shouldnt
-		if(q.empty()){
-			cout << "Puzzle cannot be solved\n";
-			exit(0);
-		}
-		//we need to update the max size of the queue
-		if(max_qeueue < q.size()){
-			max_qeueue = q.size();
-		}
-		//if we are ever deaper than the known diameter we can solve
-		//but shouldnt so we will return an error since we are trying to optimize 
-		//this
-		if(top.depth > diameter){
-			cout << "Puzzle should not be solved beyond this point\n";
-			exit(0);
-		}
-		//pop off top of queue
-		node current_node;
-		current_node.curr_state = q.top().curr_state;
-		current_node.depth = q.top().depth;
-		current_node.parent = q.top().parent;
-		
-		q.pop();
-		
-		//checking all the children before pushing to the heap
-		for(int i = 0; i < 4; ++i){
-			if(i == 0){
-				//move left
-				update_q(current_node,q,i, 1);
-			}
-			else if(i == 1){
-				update_q(current_node,q,i, 1);			
-			}
-			else if(i == 2){
-				//move up
-				update_q(current_node,q,i, 1);			
-			}
-			else{
-				//move down
-				update_q(current_node,q,i, 1);			
-			}
-		}
-	}
-}
-
 //manhattan distance 
 //h(n) = hn_manhattan; g(n) = 1, or current depth;
-void manhattan_distance(){
-
+void general_alg(int choice){
 	//just in case there is no need to solve
 	if(init_puzzle == goal_state){
 		cout << "The puzzle is already in a Solved state\n";
@@ -335,21 +203,22 @@ void manhattan_distance(){
 		for(int i = 0; i < 4; ++i){
 			if(i == 0){
 				//move left
-				update_q(current_node,q,i, 2);
+				update_q(current_node,q,i, choice);
 			}
 			else if(i == 1){
-				update_q(current_node,q,i, 2);			
+				update_q(current_node,q,i, choice);			
 			}
 			else if(i == 2){
 				//move up
-				update_q(current_node,q,i, 2);			
+				update_q(current_node,q,i, choice);			
 			}
 			else{
 				//move down
-				update_q(current_node,q,i, 2);			
+				update_q(current_node,q,i, choice);			
 			}
 		}
 	}
+	
 }
 
 #endif

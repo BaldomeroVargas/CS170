@@ -29,12 +29,12 @@ int main(){
 	switch(choice_puzzle){
 
 		case '1':
-			print_default();
+			print_start(1);
 			break;
 
 		case '2':
 			personal_puzzle();
-			print_custom();
+			print_start(2);
 			break;
 
 		default:
@@ -55,17 +55,17 @@ int main(){
 
 		//Uniform cose choice
 		case '1':
-		        uniform_cost();					
+				general_alg(1);
 			break;
 
 		//Uniform A* with the Misplaced Tile heuristic
 		case '2':
-			misplaced_tile();
+			general_alg(2);
 			break;
 
 		//Uniform A* with the Manhattan distance heusistic
 		case '3':
-			manhattan_distance();
+			general_alg(2);
 			break;
 		
 		//well lets try again
