@@ -60,7 +60,7 @@ void trace_back(node last){
 	//push path to vector
 	node * temp = &last;
 	
-	while(temp != NULL){
+	while(temp->parent != NULL){
 		output_trace.push_back(temp->curr_state);
 		temp = temp->parent;
 	}
@@ -88,7 +88,7 @@ int end_program_check(vector <vector <int> > current, int depth){
 
 //updating queue function
 //sets fn
-void update_q(node cur, priority_queue<node, vector<node>, cost> & q, 
+void update_q(node & cur, priority_queue<node, vector<node>, Compare> & q, 
 map < vector <vector <int> >, bool> & trav, int movement, int alg){
 	
 	//for hn
@@ -108,6 +108,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		case 0:
 			if(m_left(temp.curr_state) == 1){
 				if(trav.find(temp.curr_state) == trav.end()){
+					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
@@ -121,6 +122,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		case 1:
 			if(m_right(temp.curr_state) == 1){
 				if(trav.find(temp.curr_state) == trav.end()){
+					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
@@ -135,6 +137,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		case 2:
 			if(m_up(temp.curr_state) == 1){
 				if(trav.find(temp.curr_state) == trav.end()){
+					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
@@ -149,6 +152,7 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		case 3:
 			if(m_down(temp.curr_state) == 1){
 				if(trav.find(temp.curr_state) == trav.end()){
+					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
@@ -185,12 +189,13 @@ void general_alg(int choice){
 	map <vector <vector <int> >, bool> trav;
 	
 	//actually using prio_q now and setting it up
-	priority_queue<node, vector<node>, cost> q;
+	priority_queue<node, vector<node>, Compare> q;
+	trav.insert(pair<vector <vector <int> >,bool>(top.curr_state, 0));
 	q.push(top);
 	
 	while(1){
 		
-		//cehck if queue is empty which it shouldnt
+		//check if queue is empty which it shouldnt
 		if(q.empty()){
 			cout << "Puzzle cannot be solved\n";
 			exit(0);
@@ -210,9 +215,11 @@ void general_alg(int choice){
 		node current_node;
 		current_node = q.top();
 		
+		//print_trace(current_node.curr_state);
+		
 		q.pop();		
 		
-		// print_trace(current_node.curr_state); 
+		print_trace(current_node.curr_state); 
 		// cout << " " << current_node.depth << "\n";
 		
 		//checking all the children before pushing to the heap

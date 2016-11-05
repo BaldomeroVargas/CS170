@@ -32,7 +32,7 @@ class node {
 
 };
 
-struct cost{
+struct Compare{
 		bool operator()(const node& lhs, const node& rhs) const{
 			return lhs.fn > rhs.fn;
 		}	
