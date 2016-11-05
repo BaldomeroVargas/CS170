@@ -43,14 +43,13 @@ int hn_misplaced(vector <vector <int> > current){
 		for(int j = 0; j < C; ++j){
 			//do not check the last entry since it should be blank
 			if( (i == 2) && (j == 2) ){
-				continue;
+				return count;
 			}
 			if(current.at(i).at(j) != goal_state.at(i).at(j)){
 				count++;
 			} 
 		}
 	}
-	return count;
 }
 
 //for traceback
@@ -93,13 +92,26 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 	
 	//for hn
 	int hn = 0;
-	if(alg == 1){ hn = 0; }
-	else if(alg == 2){ hn = hn_misplaced(cur.curr_state); }
-	else if(alg == 3){ hn = hn_manhattan(cur.curr_state); }
+	//hn choice
+	switch(alg){
+		case 1:
+			hn = 0;
+			break;
+		case 2:
+			hn = hn_misplaced(cur.curr_state);
+			break;
+		case 3:
+			hn = hn_manhattan(cur.curr_state);
+			break;
+		default:
+			cout << "ERROR: You shouldnt be here\n";
+			exit(0);
+	}
+
 	node temp;
 	temp.depth = cur.depth + 1;
 	temp.fn = temp.depth + hn;
-	temp.parent = &cur;
+	temp.parent = cur.parent;
 	temp.curr_state = cur.curr_state;
 	
 	//for movement type
@@ -220,7 +232,7 @@ void general_alg(int choice){
 		q.pop();		
 		
 		print_trace(current_node.curr_state); 
-		// cout << " " << current_node.depth << "\n";
+		cout << " " << current_node.fn << "\n";
 		
 		//checking all the children before pushing to the heap
 		for(int i = 0; i < 4; ++i){
