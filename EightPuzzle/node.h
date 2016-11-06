@@ -10,11 +10,13 @@ class node {
 		int depth;
 		//cost f(n)
 		int fn;
+		int hn;
 		vector <vector <int> > curr_state;
 		
 		node& operator=( const node& rhs ){
 			this->depth = rhs.depth;
 			this->fn = rhs.fn;
+			this->hn = rhs.hn;
 			this->curr_state = rhs.curr_state;
 			
 			return *this;
@@ -23,6 +25,7 @@ class node {
 		node(){
 			depth = 0;
 			fn = 0;
+			hn = 0;
 			curr_state = { {0,0,0}, {0,0,0}, {0,0,0} };
 		}
 

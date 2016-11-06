@@ -103,8 +103,13 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		//left
 		case 0:
 			if(m_left(temp.curr_state) == 1){
-				int temp_hn = set_hn(alg, temp.curr_state);
-				temp.fn = temp.depth + temp_hn;
+				temp.hn = set_hn(alg, temp.curr_state);
+				if(alg == 1){
+					temp.fn = temp.depth;				
+				}
+				else{
+					temp.fn = temp.hn;					
+				}
 				if(trav.find(temp.curr_state) == trav.end()){
 					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
@@ -118,8 +123,13 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		//right
 		case 1:
 			if(m_right(temp.curr_state) == 1){
-				int temp_hn = set_hn(alg, temp.curr_state);
-				temp.fn = temp_hn;
+				temp.hn = set_hn(alg, temp.curr_state);
+				if(alg == 1){
+					temp.fn = temp.depth;				
+				}
+				else{
+					temp.fn = temp.hn;					
+				}
 				if(trav.find(temp.curr_state) == trav.end()){
 					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
@@ -134,8 +144,13 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		//up
 		case 2:
 			if(m_up(temp.curr_state) == 1){
-				int temp_hn = set_hn(alg, temp.curr_state);
-				temp.fn = temp_hn;
+				temp.hn = set_hn(alg, temp.curr_state);
+				if(alg == 1){
+					temp.fn = temp.depth;				
+				}
+				else{
+					temp.fn = temp.hn;					
+				}
 				if(trav.find(temp.curr_state) == trav.end()){
 					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
@@ -150,8 +165,13 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		//down
 		case 3:
 			if(m_down(temp.curr_state) == 1){
-				int temp_hn = set_hn(alg, temp.curr_state);
-				temp.fn = temp_hn;
+				temp.hn = set_hn(alg, temp.curr_state);
+				if(alg == 1){
+					temp.fn = temp.depth;				
+				}
+				else{
+					temp.fn = temp.hn;					
+				}
 				if(trav.find(temp.curr_state) == trav.end()){
 					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
@@ -196,6 +216,7 @@ void general_alg(int choice){
 	cout << "Expanding State:\n";
 	print_trace(top.curr_state);
 		
+	int first = 0;
 	
 	while(1){
 		
@@ -221,13 +242,17 @@ void general_alg(int choice){
 	
 		q.pop();
 		
-		// print_trace(current_node.curr_state);
+		if(first != 0){
+			cout << "The best state to expand with a g(n) = "
+			<< current_node.depth << " and h(n) = "
+			<< current_node.hn << " is...\n";
+			print_trace(current_node.curr_state);
+			cout << "Expanding this node... \n";			
+		}
 		
-		// cout << "The best state to expand with a g(n) = "
-		// << current_node.depth << " and h(n) = "
-		// << current_node.fn - current_node.depth << " is...\n";
-		// print_trace(current_node.curr_state);
-		// cout << "Expanding this node... \n";
+		if(first == 0){
+			first++;
+		}
 		
 		//checking all the children before pushing to the heap
 		for(int i = 0; i < 4; ++i){
