@@ -21,13 +21,15 @@ int hn_manhattan(vector <vector <int> > current){
 			if(current.at(i).at(j) == 0){
 				continue;
 			}
-			temp = current.at(i).at(j);
-			//this will give us the corresponding row
-			xdistance = abs(i - ((temp - 1) / 3));
-			//this helps with the corresponding column
-			ydistance = abs(j - ((temp - 1) % 3));
-			//now lets add to our overall count
-			man_dist += (xdistance + ydistance);
+			else{
+				temp = current.at(i).at(j);
+				//this will give us the corresponding row
+				xdistance = abs(i - ((temp - 1) / 3));
+				//this helps with the corresponding column
+				ydistance = abs(j - ((temp - 1) % 3));
+				//now lets add to our overall count
+				man_dist += (xdistance + ydistance);				
+			}
 		}
 	}
 
@@ -52,32 +54,13 @@ int hn_misplaced(vector <vector <int> > current){
 	}
 }
 
-//for traceback
-void trace_back(node last){
-	vector <vector <vector <int> > > output_trace;
-	
-	//push path to vector
-	node * temp = &last;
-	
-	while(temp->parent != NULL){
-		output_trace.push_back(temp->curr_state);
-		temp = temp->parent;
-	}
-	
-	//output path
-	for(int i = output_trace.size() - 1; i > -1; --i){
-		print_trace(output_trace.at(i));
-	}
-	
-	//program should end here
-	exit(0);
-}
-
 //checking if we are done
 int end_program_check(vector <vector <int> > current, int depth){
 	
 	if(current == goal_state){
-		cout << "Expanded nodes: " << expanded << endl;
+		cout << "Goal!!\n\n";
+		print_trace(current);
+		cout << "\nExpanded nodes: " << expanded << endl;
 		cout << "Max queue size: " << max_qeueue << endl;
 		cout << "Depth of goal node: " << depth << endl << endl;
 		return 1;
@@ -85,11 +68,7 @@ int end_program_check(vector <vector <int> > current, int depth){
 	return 0;
 }
 
-//updating queue function
-//sets fn
-void update_q(node & cur, priority_queue<node, vector<node>, Compare> & q, 
-map < vector <vector <int> >, bool> & trav, int movement, int alg){
-	
+int set_hn(int alg, vector <vector <int> >state ){
 	//for hn
 	int hn = 0;
 	//hn choice
@@ -98,20 +77,25 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 			hn = 0;
 			break;
 		case 2:
-			hn = hn_misplaced(cur.curr_state);
+			hn = hn_misplaced(state);
 			break;
 		case 3:
-			hn = hn_manhattan(cur.curr_state);
+			hn = hn_manhattan(state);
 			break;
 		default:
 			cout << "ERROR: You shouldnt be here\n";
 			exit(0);
-	}
+	}	
+	return hn;
+}
 
+//updating queue function
+//sets fn
+void update_q(node & cur, priority_queue<node, vector<node>, CompareQueue> & q, 
+map < vector <vector <int> >, bool> & trav, int movement, int alg){
+	
 	node temp;
 	temp.depth = cur.depth + 1;
-	temp.fn = temp.depth + hn;
-	temp.parent = cur.parent;
 	temp.curr_state = cur.curr_state;
 	
 	//for movement type
@@ -119,12 +103,13 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		//left
 		case 0:
 			if(m_left(temp.curr_state) == 1){
+				int temp_hn = set_hn(alg, temp.curr_state);
+				temp.fn = temp.depth + temp_hn;
 				if(trav.find(temp.curr_state) == trav.end()){
 					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
-						trace_back(temp);
 						exit(0);
 					}					
 				}
@@ -133,12 +118,13 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		//right
 		case 1:
 			if(m_right(temp.curr_state) == 1){
+				int temp_hn = set_hn(alg, temp.curr_state);
+				temp.fn = temp_hn;
 				if(trav.find(temp.curr_state) == trav.end()){
 					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
-						trace_back(temp);
 						exit(0);
 					}					
 				}
@@ -148,12 +134,13 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		//up
 		case 2:
 			if(m_up(temp.curr_state) == 1){
+				int temp_hn = set_hn(alg, temp.curr_state);
+				temp.fn = temp_hn;
 				if(trav.find(temp.curr_state) == trav.end()){
 					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
-						trace_back(temp);
 						exit(0);
 					}					
 				}
@@ -163,12 +150,13 @@ map < vector <vector <int> >, bool> & trav, int movement, int alg){
 		//down
 		case 3:
 			if(m_down(temp.curr_state) == 1){
+				int temp_hn = set_hn(alg, temp.curr_state);
+				temp.fn = temp_hn;
 				if(trav.find(temp.curr_state) == trav.end()){
 					trav.insert(pair<vector <vector <int> >,bool>(temp.curr_state, 0));
 					q.push(temp);
 					expanded++;
 					if(end_program_check(temp.curr_state, temp.depth)){
-						trace_back(temp);
 						exit(0);
 					}					
 				}
@@ -201,9 +189,13 @@ void general_alg(int choice){
 	map <vector <vector <int> >, bool> trav;
 	
 	//actually using prio_q now and setting it up
-	priority_queue<node, vector<node>, Compare> q;
+	priority_queue<node, vector<node>, CompareQueue> q;
 	trav.insert(pair<vector <vector <int> >,bool>(top.curr_state, 0));
 	q.push(top);
+	
+	cout << "Expanding State:\n";
+	print_trace(top.curr_state);
+		
 	
 	while(1){
 		
@@ -226,19 +218,23 @@ void general_alg(int choice){
 		//pop off top of queue
 		node current_node;
 		current_node = q.top();
+	
+		q.pop();
 		
-		//print_trace(current_node.curr_state);
+		// print_trace(current_node.curr_state);
 		
-		q.pop();		
-		
-		print_trace(current_node.curr_state); 
-		cout << " " << current_node.fn << "\n";
+		// cout << "The best state to expand with a g(n) = "
+		// << current_node.depth << " and h(n) = "
+		// << current_node.fn - current_node.depth << " is...\n";
+		// print_trace(current_node.curr_state);
+		// cout << "Expanding this node... \n";
 		
 		//checking all the children before pushing to the heap
 		for(int i = 0; i < 4; ++i){
 			//0 = left, 1 = right, 2 = up, 3 = down
 			update_q(current_node,q,trav, i, choice);	
 		}
+		
 	}
 	
 }
